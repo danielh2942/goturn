@@ -17,5 +17,5 @@ I may return to it or I may not, time will tell :)
 still like to achieve so idk lol)
 
 It will also have a partial implementation of
-[RFC3489](https://www.rfc-editor.org/rfc/rfc3489) as it is required to an
+[RFC5389](https://www.rfc-editor.org/rfc/rfc5389) as it is required to an
 extent to allow one to actually implement TURN
