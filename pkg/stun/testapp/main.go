@@ -50,7 +50,8 @@ func main() {
 			log.Println("IP Address", addr)
 			// So far this only has IPV4 Support
 			// XOR-MAPPED address, first we get the IP Address
-			discrim := regexp.MustCompile(`^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}):([0-9]{1,5})$`)
+			// Valid IPv4 regex lol
+			discrim := regexp.MustCompile(`^([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5]):([0-9]{1,4}|[0-5][0-9]{1,4}|6[0-4][0-9]{3}|655[0-2][0-9]|6553[0-5])$`)
 			matches := discrim.FindStringSubmatch(addr.String())
 			// 1 . 2 . 3 . 4 : 5
 			var addruint uint32 = 0
