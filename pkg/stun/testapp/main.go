@@ -4,8 +4,8 @@ import (
 	"encoding/binary"
 	"log"
 	"net"
-	"strconv"
-	"regexp"
+	
+	"github.com/danielh2942/goturn/pkg/iptools"
 )
 
 
@@ -48,22 +48,8 @@ func main() {
 			}
 			log.Println("Binding Request")
 			log.Println("IP Address", addr)
-			// So far this only has IPV4 Support
-			// XOR-MAPPED address, first we get the IP Address
-			// Valid IPv4 regex lol
-			discrim := regexp.MustCompile(`^([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5]):([0-9]{1,4}|[0-5][0-9]{1,4}|6[0-4][0-9]{3}|655[0-2][0-9]|6553[0-5])$`)
-			matches := discrim.FindStringSubmatch(addr.String())
-			// 1 . 2 . 3 . 4 : 5
-			var addruint uint32 = 0
-			val,_ := strconv.Atoi(matches[1])
-			addruint ^= uint32(val) << 24
-			val,_ = strconv.Atoi(matches[2])
-			addruint ^= uint32(val) << 16
-			val,_ = strconv.Atoi(matches[3])
-			addruint ^= uint32(val) << 8
-			val,_ = strconv.Atoi(matches[4])
-			addruint ^= uint32(val)
-			log.Printf("%x",addruint)
+			addruint := iptools.ParseIpAddrString(addr.String())
+			log.Println("Address after parse",addruint)
 		case 2:
 			log.Println("Shared Secret Request")
 		default:
