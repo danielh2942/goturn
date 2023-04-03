@@ -36,9 +36,6 @@
 //   0x0001 - Binding Request
 //   0x0101 - Binding Response
 //   0x0111 - Binding Error Response
-//   0x0002 - Shared Secret Request
-//   0x0102 - Shared Secret Response
-//   0x0112 - Shared Secret Error Response
 //
 //   Additional STUN message types introduced by TURN
 //   (All have request/response semantics defined)
@@ -74,7 +71,7 @@
 //
 //
 //  Attribute Types (RFC5389)
-//  0x0001 MAPPED-ADDRESS
+//  0x0001 MAPPED-ADDRESS (Implemented)
 //  0x0002 (RESERVED)
 //  0x0003 (RESERVED)
 //  0x0004 (RESERVED)
@@ -86,7 +83,7 @@
 //  0x000A UNKNOWN-ATTRIBUTES
 //  0x000B (RESERVED)
 //  0x0014 Realm
-//  0x0015 NONCE
+//  0x0015 NONCE (Implemented)
 //
 //  In my NONCE implementation Nonces are a MD5 chksum as a base16 string
 //  Consequentially, they occupy 32 characters (256 bytes)
@@ -111,7 +108,7 @@
 //    |                                                               |
 //  20+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 //
-//  0x0020 XOR-MAPPED-ADDRESS
+//  0x0020 XOR-MAPPED-ADDRESS (Implemented)
 //
 //    0               1               2             3                 4
 //    0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7 0
@@ -123,7 +120,7 @@
 //
 //  Family options
 //  0x01 IPV4
-//  0x02 IPV6
+//  0x02 IPV6 TODO
 //
 //  Comprehension-optional range
 //  0x8022 Software

@@ -41,7 +41,7 @@ func (a Ipv4) XorAddress(val [4]uint32) IpAddr {
 	XorVal := a.xor != true
 	XordAddr := a.addr ^ val[0]
 	XordPort := a.port ^ uint16(val[0]>>16)
-	return Ipv4{xor: XorVal, addr: XordAddr, port: XordPort}
+	return &Ipv4{xor: XorVal, addr: XordAddr, port: XordPort}
 }
 
 // This outputs it as a stun attribute for the return packet
@@ -60,32 +60,34 @@ func (a Ipv4) WriteAsStunAttr() []byte {
 }
 
 // Read in a stun attribute
-func (Ipv4) ParseStunAttr(data []byte) (stun.StunAttribute, uint16, error) {
+func (a *Ipv4) ParseStunAttr(data []byte) (uint16, error) {
 	// IPV4 Address type attributes are always 12 bytes, ipv6 are bigger.
 	if len(data) < 12 {
-		return Ipv4{}, 0, errors.New("invalid length")
+		return 0, errors.New("invalid length")
 	}
 
 	attrVal := binary.BigEndian.Uint16(data)
 	if (attrVal != 0x0001) && (attrVal != 0x0020) {
-		return Ipv4{}, 0, errors.New("invalid attribute type")
+		return 0, errors.New("invalid attribute type")
 	}
 
 	xord := (attrVal == 0x0020)
 	msgLen := binary.BigEndian.Uint16(data[2:4])
 
 	if msgLen != 8 {
-		return Ipv4{}, 0, errors.New("invalid length")
+		return 0, errors.New("invalid length")
 	}
 
 	if data[5] != 0x01 {
-		return Ipv4{}, 0, errors.New("Invalid data")
+		return 0, errors.New("Invalid data")
 	}
 
 	portNum := binary.BigEndian.Uint16(data[6:])
 	maddr := binary.BigEndian.Uint32(data[8:])
-
-	return Ipv4{xor: xord, port: portNum, addr: maddr}, 12, nil
+	a.xor = xord
+	a.port = portNum
+	a.addr = maddr
+	return 12, nil
 }
 
 func (a Ipv4) String() string {
@@ -128,5 +130,5 @@ func ParseIpAddrString(addr string) IpAddr {
 	addruint ^= uint32(val)
 	val, _ = strconv.Atoi(matches[5])
 	port := uint16(val)
-	return Ipv4{xor: false, addr: addruint, port: port}
+	return &Ipv4{xor: false, addr: addruint, port: port}
 }

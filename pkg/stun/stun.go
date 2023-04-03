@@ -62,7 +62,7 @@ func ParseStunAttrType(val uint16) StunAttributeType {
 // StunAttribute is a generalized form for stun attributes and stuff
 // It is done to make it easier to parse and understand STUN attributes
 type StunAttribute interface {
-	AttributeType() StunAttributeType
-	ParseStunAttr([]byte) (StunAttribute, uint16, error) // Read in STUN Attribute
-	WriteAsStunAttr() []byte                             // Output as attribute for stun packet
+	AttributeType() StunAttributeType     // Get Type of StunAttribute
+	ParseStunAttr([]byte) (uint16, error) // Read in STUN Attribute
+	WriteAsStunAttr() []byte              // Output as attribute for stun packet
 }
