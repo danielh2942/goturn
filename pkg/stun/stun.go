@@ -7,7 +7,7 @@ const (
 	MAPPED_ADDRESS     StunAttributeType = 0x0001
 	USERNAME           StunAttributeType = 0x0006
 	MESSAGE_INTEGRITY  StunAttributeType = 0x0008
-	ERROR_CODE		   StunAttributeType = 0x0009
+	ERROR_CODE         StunAttributeType = 0x0009
 	UNKNOWN_ATTRIBUTES StunAttributeType = 0x000A
 	REALM              StunAttributeType = 0x0014
 	NONCE              StunAttributeType = 0x0015
